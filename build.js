@@ -51,11 +51,20 @@ function sidebar() {
 function footer() {
   const links = [['about', '회사소개'], ['ethics', '윤리강령'], ['privacy', '개인정보처리방침'], ['youth', '청소년보호정책'], ['noemail', '이메일무단수집거부'], ['contact', '기사제보·문의']]
     .map(([h, t]) => `<a href="/${h}"${h === 'privacy' ? ' class="b"' : ''}>${t}</a>`).join('');
-  const row = (items) => `<p>${items.map(([k, v]) => `<span>${k} : ${v}</span>`).join('')}</p>`;
-  return `<footer class="foot"><div class="links"><div class="wrap">${links}</div></div><div class="wrap info">${logo('mono')}<div>
-${row([['명칭', esc(site.name)], ['제호', esc(site.title)], ['등록번호', val(site.regNo, '등록 신청 중')], ['등록일', val(site.regDate, '등록 신청 중')], ['발행일', val(site.pubDate)]])}
-${row([['발행인', val(site.publisher)], ['편집인', val(site.editor)], ['청소년보호책임자', val(site.youthOfficer)]])}
-${row([['발행소', val(site.address)], ['전화', val(site.phone)], ['이메일', esc(site.email)]].concat(site.bizNo ? [['사업자등록번호', esc(site.bizNo)]] : []))}
+  // 같은 사람이면 "발행인·편집인 : 홍길동"처럼 합쳐서 표기
+  const kdate = (d) => (/^\d{4}-\d{2}-\d{2}$/.test(d || '') ? d.replace(/^(\d+)-0?(\d+)-0?(\d+)$/, '$1년 $2월 $3일') : d);
+  const pair = (ka, a, kb, b, empty) => (a && a === b ? `${ka}·${kb} : ${esc(a)}` : `${ka} : ${val(a, empty)} / ${kb} : ${val(b, empty)}`);
+  const line = (t) => `<p>${t}</p>`;
+  const left = [
+    site.bizNo && `사업자등록번호 : ${esc(site.bizNo)}`,
+    `등록번호 : ${val(site.regNo, '등록 신청 중')} / 등록일 : ${val(kdate(site.regDate), '등록 신청 중')}`,
+    `${site.name === site.title ? `명칭·제호 : ${esc(site.name)}` : `명칭 : ${esc(site.name)} / 제호 : ${esc(site.title)}`} / 발행일 : ${val(kdate(site.pubDate))}`,
+    pair('발행인', site.publisher, '편집인', site.editor),
+    pair('개인정보보호책임자', site.privacyOfficer, '청소년보호책임자', site.youthOfficer),
+  ];
+  const right = [`발행소 : ${val(site.address)}`, `이메일 : ${esc(site.email)}`, `전화 : ${val(site.phone)}`];
+  return `<footer class="foot"><div class="links"><div class="wrap">${links}</div></div><div class="wrap info">${logo('mono')}<div class="legal">
+<div>${left.filter(Boolean).map(line).join('')}</div><div>${right.map(line).join('')}</div>
 <p class="copy">${esc(site.name)}의 모든 콘텐츠는 저작권법의 보호를 받으며, 무단 전재·복사·배포를 금합니다.<br>Copyright © ${esc(site.name)}. All rights reserved.</p></div></div></footer>`;
 }
 

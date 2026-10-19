@@ -69,7 +69,8 @@ aside h2{font-size:16px;border-bottom:2px solid #222;padding-bottom:8px;margin-b
 .logo.mono{filter:grayscale(1);opacity:.7;flex-shrink:0}
 .logo.mono img{width:36px;height:36px}.logo.mono b{font-size:22px;letter-spacing:-1px}.logo.mono small{font-size:10px}
 .foot .info p{margin-bottom:4px}
-.foot .info p span{display:inline-block;margin-right:14px}
+.foot .legal{flex:1;display:grid;grid-template-columns:1.3fr 1fr;gap:0 32px}
+.foot .copy{grid-column:1/-1}
 .foot .copy{margin-top:12px;color:#999;font-size:12px}
-@media(max-width:900px){.body{grid-template-columns:1fr}.tag{display:none}.foot .info{flex-direction:column;gap:16px}}
+@media(max-width:900px){.body{grid-template-columns:1fr}.tag{display:none}.foot .info{flex-direction:column;gap:16px}.foot .legal{grid-template-columns:1fr}}
 @media(max-width:560px){.logo b{font-size:27px}.logo small{font-size:11px}.logo img{width:42px;height:42px}.lead h2,.view h1{font-size:24px}.list strong{font-size:17px}.content{font-size:16px}.gnb a{padding:11px 13px;font-size:15px}}
