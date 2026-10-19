@@ -1,0 +1,19 @@
+{
+  "_comment": "하단 법정 표기 정보. 빈 값(\"\")은 사이트에 '등록 신청 중' 또는 '-'로 표시됩니다. 등록증 받은 날 regNo, regDate를 채우고 다시 배포하세요.",
+  "name": "뉴웹미디어",
+  "nameEn": "NEW WEB MEDIA",
+  "domain": "newweb.media",
+  "title": "뉴웹미디어",
+  "regNo": "",
+  "regDate": "",
+  "publisher": "홍길동",
+  "editor": "홍길동",
+  "youthOfficer": "홍길동",
+  "privacyOfficer": "홍길동",
+  "address": "서울특별시 ○○구 ○○로 00, 0층",
+  "pubDate": "2026-10-19",
+  "phone": "02-000-0000",
+  "email": "news@newweb.media",
+  "reportEmail": "tip@newweb.media",
+  "bizNo": ""
+}
