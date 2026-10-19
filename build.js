@@ -2,9 +2,14 @@
 const fs = require('fs');
 const path = require('path');
 const site = require('./site.json');
+// Railway 등에서 SITE_ 환경변수로 덮어쓰기 (예: regNo -> SITE_REG_NO)
+for (const k of Object.keys(site)) {
+  const v = process.env['SITE_' + k.replace(/[A-Z]/g, '_$&').toUpperCase()];
+  if (v !== undefined) site[k] = v.trim();
+}
 const { sections, articles, pages } = require('./content');
 
-const OUT = path.join(__dirname, 'dist');
+const OUT = process.env.OUT_DIR || path.join(__dirname, 'dist');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const val = (v, empty = '-') => esc(v || empty);
 const secName = (slug) => sections.find((s) => s.slug === slug).name;
