@@ -51,9 +51,8 @@ function sidebar() {
 function footer() {
   const links = [['about', '회사소개'], ['ethics', '윤리강령'], ['privacy', '개인정보처리방침'], ['youth', '청소년보호정책'], ['noemail', '이메일무단수집거부'], ['contact', '기사제보·문의']]
     .map(([h, t]) => `<a href="/${h}"${h === 'privacy' ? ' class="b"' : ''}>${t}</a>`).join('');
-  // 같은 사람이면 "발행인·편집인 : 홍길동"처럼 합쳐서 표기
   const kdate = (d) => (/^\d{4}-\d{2}-\d{2}$/.test(d || '') ? d.replace(/^(\d+)-0?(\d+)-0?(\d+)$/, '$1년 $2월 $3일') : d);
-  const pair = (ka, a, kb, b, empty) => (a && a === b ? `${ka}·${kb} : ${esc(a)}` : `${ka} : ${val(a, empty)} / ${kb} : ${val(b, empty)}`);
+  const pair = (ka, a, kb, b) => `${ka} : ${val(a)} / ${kb} : ${val(b)}`;
   const line = (t) => `<p>${t}</p>`;
   const left = [
     site.bizNo && `사업자등록번호 : ${esc(site.bizNo)}`,
