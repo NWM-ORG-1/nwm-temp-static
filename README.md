@@ -29,6 +29,7 @@ SITE_REPORT_EMAIL=tip@newweb.media
 SITE_PUB_DATE=2026-10-19
 SITE_REG_NO=
 SITE_REG_DATE=
+SITE_COMPANY=
 SITE_BIZ_NO=
 ```
 사이트는 컨테이너 시작 시 빌드되므로 변수 수정 후 재배포만 하면 반영됨. `site.json`의 모든 키를 `SITE_` + 대문자 스네이크케이스로 덮어쓸 수 있음.

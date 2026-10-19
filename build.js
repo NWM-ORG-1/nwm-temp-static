@@ -12,12 +12,13 @@ const { sections, articles, pages } = require('./content');
 const OUT = process.env.OUT_DIR || path.join(__dirname, 'dist');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const val = (v, empty = '-') => esc(v || empty);
+const company = () => site.company || site.name;
 const secName = (slug) => sections.find((s) => s.slug === slug).name;
 const posts = [...articles].sort((a, b) => b.date.localeCompare(a.date));
 
 function fill(html) {
   const contact = `<ul><li>발행소: ${val(site.address)}</li><li>전화: ${val(site.phone)}</li><li>대표 이메일: <a href="mailto:${esc(site.email)}">${esc(site.email)}</a></li><li>기사제보: <a href="mailto:${esc(site.reportEmail)}">${esc(site.reportEmail)}</a></li></ul>`;
-  return html.replace(/\{\{(\w+)\}\}/g, (_, k) => (k === 'contact' ? contact : val(site[k])));
+  return html.replace(/\{\{(\w+)\}\}/g, (_, k) => (k === 'contact' ? contact : k === 'company' ? esc(company()) : val(site[k])));
 }
 
 const logo = (cls = '') => `<a class="logo ${cls}" href="/" aria-label="${esc(site.name)} 홈"><img src="/logo-mark.svg" alt="" width="44" height="44"><span><b>${esc(site.name)}</b><small>${esc(site.nameEn)}</small></span></a>`;
@@ -57,7 +58,7 @@ function footer() {
   const left = [
     site.bizNo && `사업자등록번호 : ${esc(site.bizNo)}`,
     `등록번호 : ${val(site.regNo, '등록 신청 중')} / 등록일 : ${val(kdate(site.regDate), '등록 신청 중')}`,
-    `${site.name === site.title ? `명칭·제호 : ${esc(site.name)}` : `명칭 : ${esc(site.name)} / 제호 : ${esc(site.title)}`} / 발행일 : ${val(kdate(site.pubDate))}`,
+    `${company() === site.title ? `명칭·제호 : ${esc(site.title)}` : `명칭 : ${esc(company())} / 제호 : ${esc(site.title)}`} / 발행일 : ${val(kdate(site.pubDate))}`,
     pair('발행인', site.publisher, '편집인', site.editor),
     pair('개인정보보호책임자', site.privacyOfficer, '청소년보호책임자', site.youthOfficer),
   ];
