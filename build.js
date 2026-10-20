@@ -23,12 +23,17 @@ function fill(html) {
 
 const logo = (cls = '') => `<a class="logo ${cls}" href="/" aria-label="${esc(site.name)} 홈"><img src="/logo-mark.svg" alt="" width="44" height="44"><span><b>${esc(site.name)}</b><small>${esc(site.nameEn)}</small></span></a>`;
 
+const gtag = site.gaId ? `
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.gaId)}');</script>` : '';
+
 function layout({ title, desc, active, main, aside = true }) {
   const nav = [{ slug: '', name: '전체기사', href: '/news' }, ...sections.map((s) => ({ ...s, href: `/section/${s.slug}` }))]
     .map((s) => `<li><a href="${s.href}"${active === (s.slug || 'all') ? ' class="on"' : ''}>${s.name}</a></li>`).join('');
   const full = title ? `${title} - ${site.name}` : `${site.name} | ${site.nameEn}`;
   return `<!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><meta charset="utf-8">${gtag}<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(full)}</title><meta name="description" content="${esc(desc || `${site.name} - 인터넷신문 ${site.domain}`)}">
 <meta property="og:site_name" content="${esc(site.name)}"><meta property="og:title" content="${esc(full)}"><meta property="og:type" content="website">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
